@@ -1,0 +1,197 @@
+
+<script lang="ts">
+	import { Badge } from '$lib/components/ui/badge';
+	import { Button } from '$lib/components/ui/button';
+	import {
+		Card,
+		CardContent,
+		CardDescription,
+		CardFooter,
+		CardHeader,
+		CardTitle
+	} from '$lib/components/ui/card';
+	import { Input } from '$lib/components/ui/input';
+	import { Separator } from '$lib/components/ui/separator';
+
+	import { GreetService } from '$bindings/{{.ProjectName}}';
+
+	let name = $state('');
+	let message = $state('');
+	let error = $state('');
+	let count = $state(0);
+	let isLoading = $state(false);
+
+	const features = [
+        ['Go Backend', 'Write high-performance business logic, file processing, and system calls with Go.'],
+        ['SvelteKit', 'Build reliable desktop UIs with reactive components and TypeScript.'],
+        ['shadcn-svelte', 'Use the component source code directly from your project, making it easy to customize themes, styles, and interaction logic.']
+    ];
+
+	function increment() {
+		count += 1;
+	}
+
+	function reset() {
+		name = '';
+		message = '';
+		count = 0;
+	}
+
+	async function greet() {
+		const trimmedName = name.trim();
+
+		if (!trimmedName) {
+			error = 'Please enter your name';
+			message = '';
+			return;
+		}
+
+		isLoading = true;
+		message = '';
+		error = '';
+
+		try {
+			message = await GreetService.Greet(trimmedName);
+		} catch (err: unknown) {
+			error = err instanceof Error ? err.message : 'Call failed';
+		} finally {
+			isLoading = false;
+		}
+	}
+</script>
+
+<svelte:head>
+	<title>Wails + SvelteKit</title>
+	<meta
+		name="description"
+		content="A desktop application built with Wails, SvelteKit and shadcn-svelte"
+	/>
+</svelte:head>
+
+<div class="min-h-screen bg-muted/40">
+	<div class="pt-4 bg-background text-foreground"></div>
+
+	<header class="border-b bg-background">
+		<div class="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
+			<div class="flex items-center gap-3">
+				<div
+					class="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-sm font-bold text-primary-foreground"
+				>
+					W
+				</div>
+
+				<div>
+					<h1 class="text-lg font-semibold tracking-tight">Wails App</h1>
+					<p class="text-xs text-muted-foreground">SvelteKit Desktop Application</p>
+				</div>
+			</div>
+
+			<Badge variant="secondary">Development</Badge>
+		</div>
+	</header>
+
+	<main class="mx-auto max-w-6xl px-6 py-10">
+		<section class="mb-10">
+			<div class="max-w-3xl">
+				<Badge class="mb-4">Wails v3 + SvelteKit + shadcn-svelte</Badge>
+
+				<h2 class="text-4xl font-bold tracking-tight sm:text-5xl">
+					Build modern desktop applications
+				</h2>
+
+				<p class="mt-4 text-lg leading-8 text-muted-foreground">
+					Build backend logic with Go, craft the user interface with SvelteKit, and quickly create
+					beautiful, customizable components with shadcn-svelte.
+				</p>
+			</div>
+		</section>
+
+		<section class="grid gap-6 lg:grid-cols-3">
+			<Card class="lg:col-span-2">
+				<CardHeader>
+					<CardTitle>Call Go Backend</CardTitle>
+					<CardDescription
+						>Enter a name to call the backend method. This page uses a mock function.</CardDescription
+					>
+				</CardHeader>
+
+				<CardContent>
+					<div class="flex flex-col gap-3 sm:flex-row">
+						<Input
+							bind:value={name}
+							placeholder="Please enter your name"
+							class="flex-1"
+							onkeydown={(event) => {
+								if (event.key === 'Enter') {
+									greet();
+								}
+							}}
+						/>
+
+						<Button onclick={greet} disabled={isLoading}>
+							{isLoading ? 'Processing...' : 'Greet'}
+						</Button>
+					</div>
+
+					{#if message}
+						<div class="mt-4 rounded-lg border bg-muted/50 p-4 text-sm">
+							{message}
+						</div>
+					{/if}
+
+					{#if error}
+						<p class="mt-4 rounded-md bg-destructive/10 p-3 text-sm text-destructive">
+							{error}
+						</p>
+					{/if}
+				</CardContent>
+
+				<CardFooter class="text-sm text-muted-foreground">Press Enter to submit.</CardFooter>
+			</Card>
+
+			<Card>
+				<CardHeader>
+					<CardTitle>Counter</CardTitle>
+					<CardDescription>Used to verify Svelte state updates.</CardDescription>
+				</CardHeader>
+
+				<CardContent>
+					<div class="text-5xl font-bold tabular-nums">{count}</div>
+					<p class="mt-2 text-sm text-muted-foreground">Current click count</p>
+				</CardContent>
+
+				<CardFooter class="flex gap-2">
+					<Button onclick={increment}>Increment</Button>
+					<Button variant="outline" onclick={reset}>Reset</Button>
+				</CardFooter>
+			</Card>
+		</section>
+
+		<Separator class="my-10" />
+
+		<section class="grid gap-6 md:grid-cols-3">
+			{#each features as [title, description] (title)}
+				<Card>
+					<CardHeader>
+						<CardTitle>{title}</CardTitle>
+					</CardHeader>
+
+					<CardContent>
+						<p class="text-sm leading-6 text-muted-foreground">
+							{description}
+						</p>
+					</CardContent>
+				</Card>
+			{/each}
+		</section>
+	</main>
+
+	<footer class="border-t bg-background">
+		<div
+			class="mx-auto flex max-w-6xl flex-col gap-2 px-6 py-6 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between"
+		>
+			<span>Wails Desktop Application</span>
+			<span>Built with Go and SvelteKit</span>
+		</div>
+	</footer>
+</div>

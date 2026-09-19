@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=https://v3.wails.io/schemas/template.v3.json
+name: wails-sveltekit-shadcn
+shortname: ""
+author: Hex
+description: Wails v3 desktop app template with SvelteKit, shadcn-svelte, Tailwind CSS v4, and Bun
+helpurl: https://github.com/coghost/wails-sveltekit-shadcn
+version: v1.0.0
+wailsVersion: 3
+typescript: false
