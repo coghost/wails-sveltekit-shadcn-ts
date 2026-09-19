@@ -121,6 +121,26 @@ For macOS users, please note that you may need to remove `build/darwin/Assets.ca
 
 👉 **For detailed instructions, see [ICON_GUIDE.md](./ICON_GUIDE.md).**
 
+
+## 🔗 TypeScript Bindings
+
+Go services are exposed to the frontend as auto-generated TypeScript bindings in `frontend/bindings/`.
+
+### Generation
+
+Bindings are generated automatically by `wails3 dev` and `wails3 build`. The task is defined in the root `Taskfile.yml`:
+
+```yaml
+generate:bindings:
+  cmds:
+    - wails3 generate bindings -ts -f '{{.BUILD_FLAGS}}' -clean=true -time-type=Date
+```
+
+Key flags:
+- `-ts`: Emit `.ts` files instead of `.js`
+- `-clean=true`: Remove stale bindings before regenerating
+- `-time-type=Date`: Map Go's `time.Time` to JS `Date`
+
 ## 📚 Resources
 
 - [Wails v3 Documentation](https://v3.wails.io/)

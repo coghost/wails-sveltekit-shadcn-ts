@@ -4,17 +4,7 @@ import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vite';
 import wails from '@wailsio/runtime/plugins/vite';
 
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
-const frontendRoot = fileURLToPath(new URL('.', import.meta.url));
-
 export default defineConfig({
-	resolve: {
-		alias: {
-			$lib: path.resolve(frontendRoot, 'src/lib'),
-			$bindings: path.resolve(frontendRoot, 'bindings')
-		}
-	},
 	server: {
 		host: '127.0.0.1',
 		port: Number(process.env.WAILS_VITE_PORT) || 9245,
@@ -33,7 +23,13 @@ export default defineConfig({
 				pages: 'dist', // Output prerendered pages to the dist directory
 				assets: 'dist', // Output static assets to the dist directory as well
 				fallback: '200.html'
-			})
+			}),
+			alias: {
+				$bindings: 'bindings',
+				'$bindings/*': 'bindings/*',
+				$lib: './src/lib',
+				'$lib/*': './src/lib/*'
+			}
 		})
 	]
 });

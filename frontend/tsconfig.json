@@ -10,13 +10,6 @@
 		"skipLibCheck": true,
 		"sourceMap": true,
 		"strict": true,
-
-		"baseUrl": ".",
-		"paths": {
-			"$lib": ["./src/lib"],
-			"$lib/*": ["./src/lib/*"],
-			"$bindings/*": ["bindings/*"]
-		},
 		"moduleResolution": "bundler"
 	}
 	// Path aliases are handled by https://svelte.dev/docs/kit/configuration#alias
