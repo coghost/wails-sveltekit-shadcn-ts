@@ -26,7 +26,7 @@ A production-ready Wails v3 desktop application template powered by SvelteKit, s
 Use the project name as the Go module path. Zero manual changes needed.
 
 ```bash
-wails3 init -n myapp -mod myapp -t github.com/nebula/wails-sveltekit-shadcn
+wails3 init -n myapp -mod myapp -t github.com/nebula/wails-sveltekit-shadcn-ts
 cd myapp
 wails3 dev
 ```
@@ -38,7 +38,7 @@ This works because Wails generates bindings under `frontend/bindings/myapp/`, ma
 If you need a fully qualified module path (e.g., for GitHub hosting):
 
 ```bash
-wails3 init -n myapp -mod github.com/yourname/myapp -t github.com/nebula/wails-sveltekit-shadcn
+wails3 init -n myapp -mod github.com/yourname/myapp -t github.com/nebula/wails-sveltekit-shadcn-ts
 cd myapp
 ```
 

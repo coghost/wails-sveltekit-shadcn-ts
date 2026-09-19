@@ -1,9 +1,9 @@
 # yaml-language-server: $schema=https://v3.wails.io/schemas/template.v3.json
-name: wails-sveltekit-shadcn
-shortname: ""
+name: 'Wails v3 SvelteKit + shadcn-svelte (TypeScript)'
+shortname: wails-sveltekit-shadcn-ts
 author: Hex
-description: Wails v3 desktop app template with SvelteKit, shadcn-svelte, Tailwind CSS v4, and Bun
-helpurl: https://github.com/coghost/wails-sveltekit-shadcn
+description: Wails v3 desktop app template with TypeScript, SvelteKit, shadcn-svelte, Tailwind CSS v4, and Bun
+helpurl: https://github.com/coghost/wails-sveltekit-shadcn-ts
 version: v1.0.0
 wailsVersion: 3
-typescript: false
+typescript: true
